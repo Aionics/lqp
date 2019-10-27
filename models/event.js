@@ -8,4 +8,4 @@ const event_schema = new Schema({
     extras: Object
 })
 
-module.exports = model('User', user_schema)
+module.exports = model('Event', event_schema)
