@@ -12,4 +12,6 @@ user_schema.methods.income = function(cb) {
     this.save()
 }
 
+
+
 module.exports = model('User', user_schema)
