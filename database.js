@@ -7,7 +7,8 @@ class Database {
     }
 
     _connect() {
-        mongoose.connect(`${config.db_connection.address}${config.db_connection.db_name}`)
+        console.info(`Mongoose: trying connect to ${config.MONGODB_URL}`)
+        mongoose.connect(config.MONGODB_URL, {useNewUrlParser: true})
             .then(() => {
                 console.log('db connected')
             })

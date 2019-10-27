@@ -1,7 +1,4 @@
 module.exports = {
-    port: process.env.port || 3000,
-    db_connection: {
-        address: process.env.MONGO_URL || 'mongodb://localhost/',
-        db_name: 'low-quality-party'
-    }
+    PORT: process.env.port || 3000,
+    MONGODB_URL: process.env.MONGO_URL || 'mongodb://localhost/lqp_db'
 }
