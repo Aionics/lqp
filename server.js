@@ -1,9 +1,4 @@
 const app = require('express')()
-const database = require('./database')
-const config = require('./config')
-const express = require('express')
-const app = express()
-const database = require('./database');
 const config = require('./config')
 
 app.get('/', (req, res) => {
