@@ -1,12 +1,22 @@
 global.__base = __dirname + "/"
 
-const app = require('express')()
+const express = require('express')
+const nunjucks = require('nunjucks')
+
 const config = require('./config')
 const db = require('./database')
-const User = require('./models/user')
+
+const app = express()
+
+nunjucks.configure('templates', {
+    autoescape: true,
+    express: app
+});
+
+app.use(express.static('static'))
 
 app.get('/', (req, res) => {
-    res.send('nice to meet u')
+    res.render('index.html')
 })
 
 app.use('/api', require('./api'))
