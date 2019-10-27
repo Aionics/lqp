@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/Aionics/lqp/issues"
   },
-  "homepage": "https://github.com/Aionics/lqp#readme"
+  "homepage": "https://github.com/Aionics/lqp#readme",
+  "dependencies": {
+    "express": "latest"
+  }
 }

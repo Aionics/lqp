@@ -1,6 +1,6 @@
-const express = require('express')
-const app = express()
-const database = require('./database');
+const app = require('express')()
+const database = require('./database')
+const config = require('./config')
 
 app.get('/', (req, res) => {
     res.send('nice to meet u')
@@ -8,7 +8,6 @@ app.get('/', (req, res) => {
 
 app.use('/api', require('./api'))
 
-const port = 4884
-app.listen(port, () => {
-    console.log(`listening on ${port}`)
+app.listen(config.port, () => {
+    console.log(`listening on ${config.port}`)
 })
