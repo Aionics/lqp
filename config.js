@@ -1,7 +1,7 @@
 module.exports = {
     port: 4848,
     db_connection: {
-        address: 'mongodb://localhost/',
-        db_name: 'database'
+        address: process.env.MONGO_URL || 'mongodb://localhost/',
+        db_name: 'low-quality-party'
     }
 }
