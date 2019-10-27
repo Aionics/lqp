@@ -1,5 +1,5 @@
 const {Schema, model} = require('mongoose')
-const {PARTY_CONSTANTS} = require(__base + 'config')
+const {PARTY_CONSTANTS} = require('../config')
 const user_schema = new Schema({
     id: String,
     money: {type: Number, default: PARTY_CONSTANTS.WELCOME_BONUS},

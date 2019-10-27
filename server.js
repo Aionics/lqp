@@ -1,5 +1,3 @@
-global.__base = __dirname + "/"
-
 const express = require('express')
 const nunjucks = require('nunjucks')
 
