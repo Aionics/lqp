@@ -1,8 +1,16 @@
+global.__base = __dirname + "/"
+
 const app = require('express')()
 const config = require('./config')
 const db = require('./database')
+const User = require('./models/user')
 
-global.__base = __dirname + "/"
+let user = new User({id: 'test'})
+user.purchase({name: 'jopa', cost: 5}, (err, res) => {
+    console.log(err, res)
+})
+console.log(user.purchased_items)
+
 
 app.get('/', (req, res) => {
     res.send('nice to meet u')
@@ -10,7 +18,6 @@ app.get('/', (req, res) => {
 
 app.use('/api', require('./api'))
 
-const port = config.PORT
-app.listen(port, () => {
-    console.log(`listening on ${port}`)
+app.listen(config.PORT, () => {
+    console.log(`listening on ${config.PORT}`)
 })
