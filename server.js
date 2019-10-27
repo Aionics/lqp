@@ -1,6 +1,7 @@
 const express = require('express')
 const app = express()
- 
+const database = require('./database');
+
 app.get('/', (req, res) => {
     res.send('nice to meet u')
 })
