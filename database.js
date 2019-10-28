@@ -16,6 +16,11 @@ class Database {
                 console.error('db connection failed')
             })
     }
+
+    disconnect() {
+        console.info('Disconnecting from db')
+        mongoose.connection.close()
+    }
 }
 
 module.exports = new Database()

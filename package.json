@@ -4,8 +4,9 @@
   "description": "low quality party",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js",
-    "dev": "nodemon --ignore 'node_modules/' --watch '*/*' -- npm start"
+    "start": "npm run bootstrap-users && node server.js",
+    "dev": "nodemon --ignore 'node_modules/' --watch '*/*' -- npm start",
+    "bootstrap-users": "node scripts/bootstrap-users.js"
   },
   "repository": {
     "type": "git",
