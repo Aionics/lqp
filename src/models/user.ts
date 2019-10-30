@@ -19,10 +19,10 @@ class UserClass {
     isAdmin!: boolean
 
     @prop()
-    adminLogin!: string
+    adminLogin?: string
 
     @prop()
-    adminPassword!: string
+    adminPassword?: string
 
     public static pickPublicFields(userFields: Partial<UserClass>) {
         return {
