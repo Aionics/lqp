@@ -1,0 +1,156 @@
+template {
+    display: none;
+}
+
+.button {
+    /* обнуляем дефолтные стили */
+    font-size: 1em;
+    border: 0;
+    margin: 0;
+    padding: 0;
+    -webkit-appearance: none;
+    background: transparent;
+
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+    user-select: none;
+    -webkit-user-select: none;
+    width: 100%;
+    margin-bottom: 3px;
+}
+
+.button:disabled {
+    pointer-events: none;
+    position: relative;
+    opacity: 0.5;
+}
+
+.button:disabled:after {
+    display: none;
+}
+
+.button > span {
+    color: white;
+    font-weight: bold;
+    font-size: 1em;
+    text-align: center;
+    text-decoration:none;
+    background-color: #FFA12B;
+    display:block;
+    position:relative;
+    padding: 10px 20px;
+
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    text-shadow: 0 1px 0 #000;
+    filter: dropshadow(color=#000, offx=0px, offy=1px);
+
+    -webkit-box-shadow: inset 0 1px 0 #FFE5C4, 0 5px 0 #915100;
+    -moz-box-shadow: inset 0 1px 0 #FFE5C4, 0 5px 0 #915100;
+    box-shadow:inset 0 1px 0 #FFE5C4, 0 5px 0 #915100;
+
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+}
+
+.button:focus {
+    outline: none;
+}
+
+.button:active > span {
+    top: 3px;
+    background-color: #F78900;
+    -webkit-box-shadow: inset 0 1px 0 #FFE5C4, inset 0 -3px 0 #915100;
+    -moz-box-shadow: inset 0 1px 0 #FFE5C4, inset 0 -3px 0 #915100;
+    box-shadow:inset 0 1px 0 #FFE5C4, inset 0 -3px 0 #915100;
+}
+
+.button:focus:before {
+    content: '';
+    height: calc(100% + 4px);
+    width: 100%;
+    left: 0;
+    position: absolute;
+    outline: 1px dotted #212121;
+    outline: 5px auto -webkit-focus-ring-color;
+}
+
+.button:after {
+    content: '';
+    height: 100%;
+    width: 100%;
+    padding: 4px;
+    position: absolute;
+    bottom: -15px;
+    left: -4px;
+    z-index: -1;
+    background-color: #2B1800;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+}
+
+.input {
+    width: 100%;
+    font-size: 2em;
+    text-align: left;
+    box-shadow: inset 0 1px 2px 0 rgba(0,0,0,.17);
+    border-radius: 2px 2px 0 0;
+    border: 1px solid #bfbfbf;
+}
+
+.popup-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(5px);
+
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.popup-body {
+    position: relative;
+    background: #ffefdb;
+    top: 50px;
+    width: 100%;
+    max-height: 300px;
+    padding: 15px;
+    padding-top: 20px;
+    padding-bottom: 30px;
+    min-height: 300px;
+
+    display: flex;
+    justify-content: center;
+}
+
+.popup-content {
+    width: 100%;
+    max-width: 400px;
+}
+
+.popup-content__title {
+    margin: 0;
+    margin-bottom: 0.7em;
+}
+
+.popup-content__actions {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 10px;
+}
+
+.popup-with-input__form {
+    margin-top: 15px;
+}
+
+.popup-with-input__error-message {
+    margin-top: 2px;
+    margin-bottom: 5px;
+    color: red;
+}

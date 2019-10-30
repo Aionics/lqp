@@ -1,4 +1,4 @@
-import {prop, getModelForClass, modelOptions} from '@typegoose/typegoose';
+import {prop, getModelForClass, modelOptions, DocumentType} from '@typegoose/typegoose';
 
 
 @modelOptions({
@@ -31,4 +31,5 @@ class UserClass {
     }
 }
 
+export type UserI = DocumentType<UserClass>
 export const User = getModelForClass(UserClass)
