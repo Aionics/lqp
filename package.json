@@ -4,8 +4,8 @@
   "description": "low quality party",
   "main": "server.js",
   "scripts": {
-    "start": "npm run bootstrap-users && node server.js",
-    "dev": "nodemon --ignore 'node_modules/' --watch '*/*' -- npm start",
+    "start": "NODE_ENV=production npm run bootstrap-users && node server.js",
+    "dev": "NODE_ENV=development nodemon --ignore 'node_modules/' --watch '*/*' -- npm start",
     "bootstrap-users": "node scripts/bootstrap-users.js"
   },
   "repository": {

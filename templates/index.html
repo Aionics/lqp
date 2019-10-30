@@ -12,10 +12,82 @@
     <link rel="icon" type="image/png" sizes="16x16" href="favicons/favicon-16x16.png">
     <link rel="manifest" href="favicons/site.webmanifest">
     <link rel="stylesheet" href="styles/main.css">
+    <script src="vendor/jquery.js"></script>
+    <script src="vendor/inputmask-jquery.js"></script>
     <script src="vendor/knockout.js"></script>
+    <script src="vendor/knockout-es5.js"></script>
+    <script src="vendor/knockout-validation.js"></script>
+    <script src="vendor/knockout-validation-ru.js"></script>
 </head>
 <body>
     <h1>Добро пожаловать!!!</h1>
-    <script src="src/main.js"></script>
+
+    <template id="lqp-popup">
+        <!-- ko let: {$popupCmp: $component, $popupChildren: $componentTemplateNodes} -->
+        <div class="popup-overlay" data-bind="visible: $popupCmp.popup.isShown">
+            <div class="popup-body">
+                <div class="popup-content">
+                    <h2 class="popup-content__title" data-bind="text: $popupCmp.popup.title"></h2>
+                    <div class="popup-content__children">
+                        <!-- ko template: { nodes: $popupChildren } -->
+                        <!-- /ko -->
+                    </div>
+                    <!-- ko if: $popupCmp.popup.onButtonClick -->
+                        <div class="popup-content__actions">
+                            <button class="button" data-bind="click: $popupCmp.popup.onButtonClick">
+                                <span data-bind="text: $popupCmp.popup.buttonText"></span>
+                            </button>
+                        </div>
+                    <!-- /ko -->
+                </div>
+            </div>
+        </div>
+        <!-- /ko -->
+    </template>
+
+    <template id="lqp-popup-with-input">
+        <!-- ko let: {$popupWithInputCmp: $component, $popupWithInputChildren: $componentTemplateNodes} -->
+        <lqp-popup params="
+            isShown: $popupWithInputCmp.popup.isShown,
+            title: $popupWithInputCmp.popup.title,
+            buttonText: $popupWithInputCmp.popup.buttonText,
+            onButtonClick: $popupWithInputCmp.popup.onButtonClick
+        ">
+            <!-- ko template: { nodes: $popupWithInputChildren } -->
+            <!-- /ko -->
+
+            <form class="popup-with-input__form" data-bind="
+                submit: $popupWithInputCmp.onSubmit
+            ">
+                <input name="value" class="input" data-bind="
+                    inputmask: {
+                        value: $popupWithInputCmp.input.value,
+                        mask: $popupWithInputCmp.inputMask
+                    }
+                ">
+                <div class="popup-with-input__error-message" data-bind="
+                    validationMessage: $popupWithInputCmp.input.value
+                "></div>
+                <button class="button" type="submit">
+                    <span data-bind="text: $popupWithInputCmp.popup.buttonText"></span>
+                </button>
+            </form>
+        </lqp-popup>
+        <!-- /ko -->
+    </template>
+
+    <lqp-popup-with-input params="
+        isShown: true,
+        title: 'Иди сюда, сука',
+        buttonText: 'Ok',
+        inputMask: 'AA-AA-AA-AA',
+        onSubmit: function(a) {console.log('SUBMITTED!', a)}
+    ">
+        Not only you can use a gradient background color in the button
+        but also you can use parallax effect on
+        the button. Trust me, the combination of both looks simply awesome.
+    </lqp-popup-with-input>
+
+    <script src="js/main.js"></script>
 </body>
 </html>

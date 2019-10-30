@@ -8,7 +8,8 @@ const app = express()
 
 nunjucks.configure('templates', {
     autoescape: true,
-    express: app
+    express: app,
+    noCache: process.env.NODE_ENV !== 'production'
 });
 
 app.use(express.static('static'))
