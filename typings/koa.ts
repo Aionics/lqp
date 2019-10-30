@@ -1,6 +1,7 @@
 import {DefaultContext, DefaultState, Middleware} from 'koa';
+import {DocumentType} from '@typegoose/typegoose';
 // import {Middleware} from '@koa/router'
-import {IUser} from '../src/models/user'
+import {UserI} from '../src/models/user'
 
 export interface AppContext extends DefaultContext {
     success: (data: any) => void;
@@ -9,13 +10,13 @@ export interface AppContext extends DefaultContext {
 }
 
 export interface AppState extends DefaultState {
-    currentUser?: IUser
+    currentUser?: UserI
 }
 
 export type AppMiddleware = Middleware<AppState, AppContext>
 
 export interface PrivateState extends DefaultState {
-    currentUser: IUser
+    currentUser: UserI
 }
 
 export type PrivateMiddleware = Middleware<PrivateState, AppContext>

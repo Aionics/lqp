@@ -8,7 +8,7 @@ import {AppContext, AppState} from "./typings/koa"
 import {setupRoutes} from "./src/setup-routes"
 import {getLogger} from "./src/get-logger"
 import {Database} from "./src/database"
-import {PORT} from "./src/constants"
+import {IS_PRODUCTION, PORT} from "./src/constants"
 
 const serverLogger = getLogger('server')
 const app = new Koa<AppState, AppContext>();
@@ -39,7 +39,7 @@ app.use((ctx, next) => {
 
 const nunjucksOptions = {
     opts: {
-        noCache: false,
+        noCache: !IS_PRODUCTION,
         throwOnUndefined: true
     },
     globals: { title: 'My Page' },

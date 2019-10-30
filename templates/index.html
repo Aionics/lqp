@@ -12,20 +12,20 @@
     <link rel="icon" type="image/png" sizes="16x16" href="favicons/favicon-16x16.png">
     <link rel="manifest" href="favicons/site.webmanifest">
     <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="styles/components.css">
     <script src="vendor/jquery.js"></script>
+    <script src="vendor/axios.js"></script>
     <script src="vendor/inputmask-jquery.js"></script>
     <script src="vendor/knockout.js"></script>
     <script src="vendor/knockout-es5.js"></script>
     <script src="vendor/knockout-validation.js"></script>
     <script src="vendor/knockout-validation-ru.js"></script>
 </head>
-<body>
-    <h1>Добро пожаловать!!!</h1>
-
+<body data-bind="css: {'is-app-inited': $root.isAppInited}">
     <template id="lqp-popup">
         <!-- ko let: {$popupCmp: $component, $popupChildren: $componentTemplateNodes} -->
         <div class="popup-overlay" data-bind="visible: $popupCmp.popup.isShown">
-            <div class="popup-body">
+            <div class="popup-body" data-bind="style: {background: $popupCmp.popup.background}">
                 <div class="popup-content">
                     <h2 class="popup-content__title" data-bind="text: $popupCmp.popup.title"></h2>
                     <div class="popup-content__children">
@@ -51,11 +51,11 @@
             isShown: $popupWithInputCmp.popup.isShown,
             title: $popupWithInputCmp.popup.title,
             buttonText: $popupWithInputCmp.popup.buttonText,
+            background: $popupWithInputCmp.popup.background,
             onButtonClick: $popupWithInputCmp.popup.onButtonClick
         ">
             <!-- ko template: { nodes: $popupWithInputChildren } -->
             <!-- /ko -->
-
             <form class="popup-with-input__form" data-bind="
                 submit: $popupWithInputCmp.onSubmit
             ">
@@ -68,6 +68,10 @@
                 <div class="popup-with-input__error-message" data-bind="
                     validationMessage: $popupWithInputCmp.input.value
                 "></div>
+                <div class="popup-with-input__error-message" data-bind="
+                    visible: $popupWithInputCmp.errorMessage,
+                    text: $popupWithInputCmp.errorMessage
+                "></div>
                 <button class="button" type="submit">
                     <span data-bind="text: $popupWithInputCmp.popup.buttonText"></span>
                 </button>
@@ -77,17 +81,44 @@
     </template>
 
     <lqp-popup-with-input params="
-        isShown: true,
-        title: 'Иди сюда, сука',
-        buttonText: 'Ok',
+        isShown: $root.loginPopup.isShown,
+        errorMessage: $root.loginPopup.errorMessage,
+        onSubmit: handleLoginPopupSubmit,
+        title: 'Войдите в свой АККАУНТ',
+        buttonText: 'ВО ЙТИ',
         inputMask: 'AA-AA-AA-AA',
-        onSubmit: function(a) {console.log('SUBMITTED!', a)}
     ">
-        Not only you can use a gradient background color in the button
-        but also you can use parallax effect on
-        the button. Trust me, the combination of both looks simply awesome.
+        Войди ну поожалуйста спасибо до свидания
     </lqp-popup-with-input>
 
+    <lqp-popup-with-input params="
+        isShown: $root.changeNamePopup.isShown,
+        onSubmit: handleNamePopupSubmit,
+        title: 'Настало времмя поменять имя!',
+        buttonText: 'ПО МЕНЯТЬ',
+        background: '#dbffe6',
+        inputMask: ''
+    ">
+        Ну поменяй имя ну
+    </lqp-popup-with-input>
+
+
+    <main class="main">
+        <div class="body-bg"></div>
+        <!-- ko if: $root.user -->
+        <div class="header">
+            <h2 class="display-id" data-bind="text: $root.user.displayId"></h2>
+            <h1 class="display-name" data-bind="text: $root.user.displayName"></h1>
+        </div>
+        <div class="amount-block">
+            <div class="amount-display">
+                <span class="amount-display__current" data-bind="text: $root.currentAmount"></span>
+            </div>
+        </div>
+        <!-- /ko -->
+    </main>
+
+    <script src="js/components.js"></script>
     <script src="js/main.js"></script>
 </body>
 </html>
