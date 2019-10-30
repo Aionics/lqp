@@ -10,11 +10,11 @@ body * {
 
 body {
     opacity: 0;
+    transition: opacity 1s;
 }
 
 body.is-app-inited {
     opacity: 1;
-    transition: opacity 2s;
 }
 
 .body-bg {
@@ -88,6 +88,7 @@ body.is-app-inited {
 .amount-display__current {
     font-size: 4em;
     color: white;
+    font-weight: bold;
 
     text-transform: uppercase;
     background: linear-gradient(

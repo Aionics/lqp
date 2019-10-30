@@ -25,6 +25,7 @@
     <template id="lqp-popup">
         <!-- ko let: {$popupCmp: $component, $popupChildren: $componentTemplateNodes} -->
         <div class="popup-overlay" data-bind="visible: $popupCmp.popup.isShown">
+            <div class="popup-overlay-header"></div>
             <div class="popup-body" data-bind="style: {background: $popupCmp.popup.background}">
                 <div class="popup-content">
                     <h2 class="popup-content__title" data-bind="text: $popupCmp.popup.title"></h2>

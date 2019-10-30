@@ -8,7 +8,7 @@ ko.bindingHandlers.inputmask = {
         var mask = valueAccessor();
         var observable = mask.value;
         if (ko.isObservable(observable)) {
-            $(element).on('focusout change', function () {
+            $(element).on('focusout change blur keyup', function () {
                 if ($(element).inputmask('isComplete')) {
                     observable($(element).val());
                 } else {
@@ -50,20 +50,21 @@ ko.components.register('lqp-popup-with-input', {
         self.inputMask = params.inputMask || ''
         self.errorMessage = toObservable(params.errorMessage)
         self.input = {
-            value: toObservable(params.inputValue || '').extend({
-                required: false,
-                validation: {
+            value: toObservable(params.inputValue || '')
+                .extend({
                     required: true,
-                    validator: function (val, mask) {
-                        if (!mask) {
-                            return true
-                        }
-                        return Inputmask.isValid(val, mask);
-                    },
-                    message: 'Введите валидный код',
-                    params: self.inputMask
-                }
-            })
+                    validation: {
+                        required: true,
+                        validator: function (val, mask) {
+                            if (!mask) {
+                                return true
+                            }
+                            return Inputmask.isValid(val, mask);
+                        },
+                        message: 'Введите валидный код',
+                        params: self.inputMask
+                    }
+                })
         }
         self.inputValidationObservable = ko.validatedObservable(self.input)
         self.onSubmit = function() {

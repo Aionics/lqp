@@ -1,5 +1,5 @@
 import {User} from '../../models/user'
-import {SESSION_COOKIE_KEY, SESSION_COOKIE_MAX_AGE} from '../../constants'
+import {SESSION_COOKIE_KEY, SESSION_COOKIE_MAX_AGE_MS} from '../../constants'
 import {AppMiddleware} from '../../../typings/koa'
 import {getLogger} from "../../get-logger"
 
@@ -22,7 +22,7 @@ export const login: AppMiddleware = async (ctx, next) => {
         secure: false, // TODO: включать на прооде — там есть HTTPS
         httpOnly: true,
         overwrite: true,
-        maxAge: SESSION_COOKIE_MAX_AGE
+        maxAge: SESSION_COOKIE_MAX_AGE_MS
     })
     ctx.success(user.toObject())
     return next()
