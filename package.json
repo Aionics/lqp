@@ -18,7 +18,10 @@
   },
   "homepage": "https://github.com/Aionics/lqp#readme",
   "dependencies": {
+    "body-parser": "latest",
+    "cookie-session": "^1.3.3",
     "express": "^4.17.1",
+    "express-session": "^1.17.0",
     "mongoose": "^5.7.7",
     "nunjucks": "^3.2.0"
   },

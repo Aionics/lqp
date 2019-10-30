@@ -1,9 +1,9 @@
 const {Schema, model} = require('mongoose')
 const {PARTY_CONSTANTS} = require('../config')
 const user_schema = new Schema({
-    id: String,
-    money: {type: Number, default: PARTY_CONSTANTS.WELCOME_BONUS},
-    level: {type: Number, default: 1}
+    displayId: String,
+    displayName: String,
+    secretKey: {type: String, select: false},
 })
 
 user_schema.methods.income = function(cb) {
