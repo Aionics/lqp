@@ -15,7 +15,7 @@ class UserClass {
     @prop({required: true})
     secretKey!: string
 
-    @prop({required: true})
+    @prop({required: true, default: false})
     isAdmin!: boolean
 
     @prop()
