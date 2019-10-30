@@ -1,0 +1,27 @@
+{
+  "compilerOptions": {
+    "strict": true,
+    "sourceMap": true,
+    "target": "es2017",
+    "moduleResolution": "node",
+    "jsx": "react",
+    "lib":[
+      "dom",
+      "es2017"
+    ],
+    "typeRoots": ["node_modules/@types"],
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "resolveJsonModule": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true
+  },
+  "include": [
+    "./*",
+    "./typings/*",
+    "./src/**/*"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
+}
