@@ -1,7 +1,7 @@
 var appViewModel = {
     isAppInited: ko.observable(false),
     user: ko.observable(null),
-    currentAmount: ko.observable(105),
+    currentBalance: ko.observable(0),
     lootboxState: ko.observable('initial'), // initial, shake, finished
     loginPopup: {
         isShown: ko.observable(false),
@@ -20,6 +20,38 @@ function requestLogin() {
             if (!appViewModel.user.displayName) {
                 showChangeNamePopup()
             }
+            getBalanceRepeatedly()
+        })
+        .catch(function(err) {
+            if (err.response.status === 401) {
+                showLoginPopup()
+            }
+        })
+}
+
+function getBalance() {
+    return axios.get('/api/private/balance')
+        .then(function(response) {
+            appViewModel.currentBalance = response.data.result.balance
+        })
+        .catch(function(err) {
+            if (err.response.status === 401) {
+                showLoginPopup()
+            }
+        })
+}
+
+function getBalanceRepeatedly() {
+    getBalance()
+    setInterval(function() {
+        getBalance()
+    }, 5 * 1000)
+}
+
+function purchaseLootbox() {
+    return axios.post('/api/private/purchase-lootbox')
+        .then(function(response) {
+            getBalance()
         })
         .catch(function(err) {
             if (err.response.status === 401) {
@@ -81,14 +113,19 @@ function handleLootboxClick() {
     }
     appViewModel.lootboxState = 'shake'
     setTimeout(function() {
-        appViewModel.lootboxState = 'finished'
+        purchaseLootbox().then(function() {
+            appViewModel.lootboxState = 'finished'
 
-        setTimeout(function() {
+            setTimeout(function() {
+                appViewModel.lootboxState = 'initial'
+            }, 5000)
+        }).catch(function(err) {
             appViewModel.lootboxState = 'initial'
-        }, 2000)
-    }, 2000)
+        })
+    }, 1500)
 }
 
 ko.applyBindings(appViewModel);
 requestLogin()
 appViewModel.isAppInited = true
+
