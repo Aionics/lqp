@@ -33,6 +33,8 @@ body.is-app-inited {
 }
 
 .main {
+    display: flex;
+    flex-direction: column;
     position: relative;
     max-width: 500px;
     min-height: 100vh;
@@ -92,8 +94,16 @@ body.is-app-inited {
     }
 }
 
-.lootbox-container {
-    margin-top: 50px;
+.lootbox-wrapper {
+    flex-grow: 1;
+    width: 100%;
+    bottom: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.lootbox {
     width: 100%;
     height: 100%;
     display: flex;
@@ -103,7 +113,7 @@ body.is-app-inited {
     transition: transform 0.3s;
     cursor: pointer;
 }
-.lootbox-container .box {
+.lootbox .box {
     width: 200px;
     height: 200px;
     display: flex;
@@ -113,31 +123,31 @@ body.is-app-inited {
     transition: transform 0.7s;
 }
 
-.lootbox-container--shake .box {
+.lootbox--shake .box {
     -webkit-animation: shake 1s cubic-bezier(0.3, 0.06, 0.2, 0.9) infinite;
     animation: shake 1s cubic-bezier(0.3, 0.06, 0.2, 0.9) infinite;
 }
 
-.lootbox-container--finished {
+.lootbox--finished {
     transform: translateY(10px);
 }
 
-.lootbox-container--finished .upper {
+.lootbox--finished .upper {
     transform-origin: left bottom;
     transform: translateY(-20px) rotate(-5deg);
 }
 
-.lootbox-container--finished .lower {
+.lootbox--finished .lower {
     /*transform: translateY(15px);*/
 }
 
-.lootbox-container .lower {
+.lootbox .lower {
     position: relative;
     text-align: center;
     text-transform: uppercase;
 }
 
-.lootbox-container .finish-text {
+.lootbox .finish-text {
     position: relative;
     top: 25px;
     font-size: 1.2em;
@@ -147,11 +157,11 @@ body.is-app-inited {
     transition: opacity 1s;
 }
 
-.lootbox-container--finished .finish-text {
+.lootbox--finished .finish-text {
     opacity: 1;
 }
 
-.lootbox-container .box .upper {
+.lootbox .box .upper {
     border: 1px solid black;
     border-bottom: 1px solid transparent;
     width: 100%;
@@ -161,14 +171,14 @@ body.is-app-inited {
     border-top-right-radius: 20px;
     border-bottom: 10px solid #585757;
 }
-.lootbox-container .box .lower {
+.lootbox .box .lower {
     width: 100%;
     flex: 1;
     background-color: orange;
     border-bottom-left-radius: 20px;
     border-bottom-right-radius: 20px;
 }
-.lootbox-container .box .latch {
+.lootbox .box .latch {
     position: absolute;
     width: 10%;
     height: 15%;
