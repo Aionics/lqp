@@ -27,6 +27,9 @@ class EventClass {
 
     @prop()
     public moneyChange?: number
+
+    @prop()
+    public extras?: object
 }
 
 export type EventI = DocumentType<EventClass>

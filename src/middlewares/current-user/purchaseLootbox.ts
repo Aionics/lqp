@@ -1,16 +1,32 @@
 import {PrivateMiddleware} from '../../../typings/koa'
 import {Event} from "../../models/event";
-import {LOOTBOX_COST} from "../../constants";
+import {LOOTBOX_COSTS} from "../../constants";
+
+function getLootboxCost(tier: any): number {
+    if (typeof tier === "number") {
+        if (tier in LOOTBOX_COSTS) {
+            return (LOOTBOX_COSTS as any)[tier]
+        }
+    }
+    return -1
+}
 
 export const purchaseLootbox: PrivateMiddleware = async (ctx, next) => {
     const {currentUser} = ctx.state
+    const {tier} = ctx.request.body || 1
+
     const purchaseEvent = new Event({
         type: 'purchase-lootbox',
         initiator: currentUser,
         targetUsers: [currentUser],
-        moneyChange: LOOTBOX_COST
+        moneyChange: getLootboxCost(tier),
+        extras: {
+            tier: tier
+        }
     })
     await purchaseEvent.save()
     ctx.success(purchaseEvent.toObject())
     return next()
 }
+
+
