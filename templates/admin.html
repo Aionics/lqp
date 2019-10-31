@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Низкокачественная вечеринка</title>
+    <link rel="icon" href="favicons/favicon.ico" type="image/x-icon">
+    <link rel="apple-touch-icon" sizes="180x180" href="favicons/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicons/favicon-16x16.png">
+    <link rel="manifest" href="favicons/site.webmanifest">
+    <link rel="stylesheet" href="styles/components.css">
+    <link rel="stylesheet" href="styles/admin.css">
+    <script src="vendor/jquery.js"></script>
+    <script src="vendor/axios.js"></script>
+    <script src="vendor/inputmask-jquery.js"></script>
+    <script src="vendor/knockout.js"></script>
+    <script src="vendor/knockout-es5.js"></script>
+    <script src="vendor/knockout-validation.js"></script>
+    <script src="vendor/knockout-validation-ru.js"></script>
+    <style>
+        body * {
+            box-sizing: border-box;
+        }
+    </style>
+</head>
+<body>
+<template id="lqp-popup">
+    <!-- ko let: {$popupCmp: $component, $popupChildren: $componentTemplateNodes} -->
+    <div class="popup-overlay" data-bind="visible: $popupCmp.popup.isShown">
+        <div class="popup-overlay-header"></div>
+        <div class="popup-body" data-bind="style: {background: $popupCmp.popup.background}">
+            <div class="popup-content">
+                <h2 class="popup-content__title" data-bind="text: $popupCmp.popup.title"></h2>
+                <div class="popup-content__children">
+                    <!-- ko template: { nodes: $popupChildren } -->
+                    <!-- /ko -->
+                </div>
+                <!-- ko if: $popupCmp.popup.onButtonClick -->
+                <div class="popup-content__actions">
+                    <button class="button" data-bind="click: $popupCmp.popup.onButtonClick">
+                        <span data-bind="text: $popupCmp.popup.buttonText"></span>
+                    </button>
+                </div>
+                <!-- /ko -->
+            </div>
+        </div>
+    </div>
+    <!-- /ko -->
+</template>
+<template id="lqp-popup-with-input">
+    <!-- ko let: {$popupWithInputCmp: $component, $popupWithInputChildren: $componentTemplateNodes} -->
+    <lqp-popup params="
+            isShown: $popupWithInputCmp.popup.isShown,
+            title: $popupWithInputCmp.popup.title,
+            buttonText: $popupWithInputCmp.popup.buttonText,
+            background: $popupWithInputCmp.popup.background,
+            onButtonClick: $popupWithInputCmp.popup.onButtonClick
+        ">
+        <!-- ko template: { nodes: $popupWithInputChildren } -->
+        <!-- /ko -->
+        <form class="popup-with-input__form" data-bind="
+                submit: $popupWithInputCmp.onSubmit
+            ">
+            <input name="value" class="input" data-bind="
+                    inputmask: {
+                        value: $popupWithInputCmp.input.value,
+                        mask: $popupWithInputCmp.inputMask
+                    }
+                ">
+            <div class="popup-with-input__error-message" data-bind="
+                    validationMessage: $popupWithInputCmp.input.value
+                "></div>
+            <div class="popup-with-input__error-message" data-bind="
+                    visible: $popupWithInputCmp.errorMessage,
+                    text: $popupWithInputCmp.errorMessage
+                "></div>
+            <button class="button" type="submit">
+                <span data-bind="text: $popupWithInputCmp.popup.buttonText"></span>
+            </button>
+        </form>
+    </lqp-popup>
+    <!-- /ko -->
+</template>
+
+<main>
+    <div class="admin-controls">
+        <div>
+            <button class="button" data-bind="click: handleStartIncomeButtonClick">
+                <span>start income</span>
+            </button>
+        </div>
+        <div>
+            <button class="button" data-bind="click: handleStopIncomeButtonClick">
+                <span>stop income</span>
+            </button>
+        </div>
+    </div>
+
+    <table class="transactions">
+        <thead>
+        <tr>
+            <th>Тип</th>
+            <th>Last name</th>
+        </tr>
+        </thead>
+        <tbody data-bind="foreach: transactions">
+            <tr>
+                <td data-bind="text: type"></td>
+            </tr>
+        </tbody>
+    </table>
+</main>
+
+<script src="js/admin.js"></script>
+</body>
+</html>

@@ -20,8 +20,11 @@
     <script src="vendor/knockout-es5.js"></script>
     <script src="vendor/knockout-validation.js"></script>
     <script src="vendor/knockout-validation-ru.js"></script>
+
+    <script src="vendor/swiper/swiper.js"></script>
+    <link rel="stylesheet" href="vendor/swiper/swiper.css">
 </head>
-<body data-bind="css: {'is-app-inited': $root.isAppInited}">
+<body class="app-body" data-bind="css: {'is-app-inited': $root.isAppInited}">
     <template id="lqp-popup">
         <!-- ko let: {$popupCmp: $component, $popupChildren: $componentTemplateNodes} -->
         <div class="popup-overlay" data-bind="visible: $popupCmp.popup.isShown">
@@ -115,22 +118,64 @@
                 <span class="amount-display__current" data-bind="text: $root.currentBalance"></span>
             </div>
         </div>
+        <!-- /ko -->
 
-        <div class="lootbox-wrapper">
-            <div class="lootbox" role="button" data-bind="
-                click: handleLootboxClick,
-                class: 'lootbox--' + $root.lootboxState
-            ">
-                <div class="box">
-                    <div class="upper"></div>
-                    <div class="lower">
-                        <span class="finish-text">Подойдите к&nbsp;дилеру</span>
+        <div class="swiper-container">
+            <div class="swiper-wrapper">
+                <div class="swiper-slide">
+                    <div class="lootbox-wrapper">
+                        <div class="lootbox" role="button" data-bind="
+                            click: handleLootboxClick,
+                            class: 'lootbox--' + $root.lootboxState
+                        ">
+                            <div class="box">
+                                <div class="upper"></div>
+                                <div class="lower">
+                                    <span class="finish-text">Подойдите к&nbsp;дилеру</span>
+                                </div>
+                                <div class="latch"></div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="latch"></div>
+                </div>
+                <div class="swiper-slide">
+                    <div class="lootbox-wrapper">
+                        <div class="lootbox lootbox--level-two" role="button" data-bind="
+                            click: handleLootboxClick,
+                            class: 'lootbox--' + $root.lootboxState
+                        ">
+                            <div class="box">
+                                <div class="upper"></div>
+                                <div class="lower">
+                                    <span class="finish-text">Подойдите к&nbsp;дилеру</span>
+                                </div>
+                                <div class="latch"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="swiper-slide">
+                    <div class="lootbox-wrapper">
+                        <div class="lootbox lootbox--level-three" role="button" data-bind="
+                            click: handleLootboxClick,
+                            class: 'lootbox--' + $root.lootboxState
+                        ">
+                            <div class="box">
+                                <div class="upper"></div>
+                                <div class="lower">
+                                    <span class="finish-text">Подойдите к&nbsp;дилеру</span>
+                                </div>
+                                <div class="latch"></div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
+
+            <!-- If we need navigation buttons -->
+            <div class="swiper-button-prev"></div>
+            <div class="swiper-button-next"></div>
         </div>
-        <!-- /ko -->
     </main>
 
     <script src="js/components.js"></script>

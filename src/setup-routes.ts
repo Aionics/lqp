@@ -10,6 +10,7 @@ import {getBalance} from "./middlewares/current-user/getBalance"
 import {startIncome, stopIncome} from "./middlewares/admin/income-handlers";
 import {getTransactions} from "./middlewares/admin/getTransactions";
 import {purchaseLootbox} from "./middlewares/current-user/purchaseLootbox";
+import {requireAdminLogin} from "./middlewares/login/requireAdminLogin"
 import {getPendingLootboxes, receiveLootbox} from "./middlewares/admin/processLootboxes";
 
 export function setupRoutes(app: Koa<AppState, AppContext>) {
@@ -20,6 +21,15 @@ export function setupRoutes(app: Koa<AppState, AppContext>) {
     });
     app.use(rootRouter.routes())
     app.use(rootRouter.allowedMethods())
+
+    const rootAdmin = new Router<AppState, AppContext>();
+    rootAdmin.use(requireAdminLogin)
+    rootAdmin.get('/admin', async (ctx, next) => {
+        await ctx.render('admin')
+        return next()
+    });
+    app.use(rootAdmin.routes())
+    app.use(rootAdmin.allowedMethods())
 
     const apiRouter = new Router<AppState, AppContext>({
         prefix: '/api'
@@ -43,6 +53,7 @@ export function setupRoutes(app: Koa<AppState, AppContext>) {
     const apiAdminRouter = new Router<AppState, AppContext>({
         prefix: '/api/admin'
     });
+    apiAdminRouter.use(requireAdminLogin)
     apiAdminRouter.post('/start-income', startIncome)
     apiAdminRouter.post('/stop-income', stopIncome)
     apiAdminRouter.get('/transactions', getTransactions)
