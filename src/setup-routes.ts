@@ -8,6 +8,7 @@ import {requireUserLogin} from "./middlewares/login/requireUserLogin"
 import {updateCurrentUser} from "./middlewares/current-user/updateCurrentUser"
 import {getBalance} from "./middlewares/current-user/getBalance"
 import {startIncome, stopIncome} from "./middlewares/admin/income-handlers";
+import {getTransactions} from "./middlewares/admin/getTransactions";
 
 export function setupRoutes(app: Koa<AppState, AppContext>) {
     const rootRouter = new Router<AppState, AppContext>();
@@ -41,6 +42,7 @@ export function setupRoutes(app: Koa<AppState, AppContext>) {
     });
     apiAdminRouter.post('/start-income', startIncome)
     apiAdminRouter.post('/stop-income', stopIncome)
+    apiAdminRouter.get('/transactions', getTransactions)
     app.use(apiAdminRouter.routes())
     app.use(apiAdminRouter.allowedMethods())
 }
