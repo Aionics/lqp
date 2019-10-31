@@ -4,7 +4,8 @@ import {UserI} from "./user";
 
 const userRef = {
     type: Schema.Types.ObjectId,
-    ref: 'User'
+    ref: 'User',
+    autopopulate: true
 }
 
 @modelOptions({
@@ -18,15 +19,20 @@ class EventClass {
     @prop({...userRef})
     public initiator?: Ref<UserI>
 
-    @prop({type: [userRef]})
-    public targetUsers?: [Ref<UserI>]
+    @prop([userRef])
+    public targetUsers?: Ref<UserI>[]
 
     @prop({default: false})
     public isGlobal?: boolean
 
     @prop()
     public moneyChange?: number
+
+    @prop()
+    public extras?: object
 }
 
 export type EventI = DocumentType<EventClass>
 export const Event = getModelForClass(EventClass)
+
+ // [{ type: Schema.Types.ObjectId, ref: 'Person' }],
