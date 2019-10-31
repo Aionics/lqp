@@ -6,6 +6,10 @@ import {login} from "./middlewares/login/login"
 import {getCurrentUser} from "./middlewares/current-user/getCurrentUser"
 import {requireUserLogin} from "./middlewares/login/requireUserLogin"
 import {updateCurrentUser} from "./middlewares/current-user/updateCurrentUser"
+import {getBalance} from "./middlewares/current-user/getBalance"
+import {startIncome, stopIncome} from "./middlewares/admin/income-handlers";
+import {getTransactions} from "./middlewares/admin/getTransactions";
+import {purchaseLootbox} from "./middlewares/current-user/purchaseLootbox";
 
 export function setupRoutes(app: Koa<AppState, AppContext>) {
     const rootRouter = new Router<AppState, AppContext>();
@@ -29,6 +33,18 @@ export function setupRoutes(app: Koa<AppState, AppContext>) {
     privateApiRouter.use(requireUserLogin)
     privateApiRouter.get('/user', getCurrentUser)
     privateApiRouter.patch('/user', updateCurrentUser)
+    privateApiRouter.post('/purchase-lootbox', purchaseLootbox)
     app.use(privateApiRouter.routes())
     app.use(privateApiRouter.allowedMethods())
+
+    privateApiRouter.get('/balance', getBalance)
+
+    const apiAdminRouter = new Router<AppState, AppContext>({
+        prefix: '/api/admin'
+    });
+    apiAdminRouter.post('/start-income', startIncome)
+    apiAdminRouter.post('/stop-income', stopIncome)
+    apiAdminRouter.get('/transactions', getTransactions)
+    app.use(apiAdminRouter.routes())
+    app.use(apiAdminRouter.allowedMethods())
 }
