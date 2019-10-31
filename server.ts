@@ -78,7 +78,7 @@ Event.findOne(welcomeBonusObject, (err, welcomeBonusEvent) => {
 })
 
 // WIPE EVENTS
-// Event.deleteMany({type: 'income'}, (err) => {
+// Event.deleteMany({}, (err) => {
 //     console.log(err)
 // })
 app.listen(PORT, () => {
