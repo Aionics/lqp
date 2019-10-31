@@ -2,6 +2,7 @@ var appViewModel = {
     isAppInited: ko.observable(false),
     user: ko.observable(null),
     currentAmount: ko.observable(105),
+    lootboxState: ko.observable('initial'), // initial, shake, finished
     loginPopup: {
         isShown: ko.observable(false),
         errorMessage: ko.observable(null)
@@ -72,6 +73,20 @@ function handleNamePopupSubmit(props) {
             }
             appViewModel.loginPopup.errorMessage = err.response.data.result
         })
+}
+
+function handleLootboxClick() {
+    if (appViewModel.lootboxState !== 'initial') {
+        return
+    }
+    appViewModel.lootboxState = 'shake'
+    setTimeout(function() {
+        appViewModel.lootboxState = 'finished'
+
+        setTimeout(function() {
+            appViewModel.lootboxState = 'initial'
+        }, 2000)
+    }, 2000)
 }
 
 ko.applyBindings(appViewModel);

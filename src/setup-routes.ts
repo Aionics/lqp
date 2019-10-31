@@ -6,9 +6,11 @@ import {login} from "./middlewares/login/login"
 import {getCurrentUser} from "./middlewares/current-user/getCurrentUser"
 import {requireUserLogin} from "./middlewares/login/requireUserLogin"
 import {updateCurrentUser} from "./middlewares/current-user/updateCurrentUser"
+import {requireAdminLogin} from "./middlewares/login/requireAdminLogin"
 
 export function setupRoutes(app: Koa<AppState, AppContext>) {
     const rootRouter = new Router<AppState, AppContext>();
+    // rootRouter.use(requireAdminLogin)
     rootRouter.get('/', async (ctx, next) => {
         await ctx.render('index')
         return next()
