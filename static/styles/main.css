@@ -33,6 +33,8 @@ body.is-app-inited {
 }
 
 .main {
+    display: flex;
+    flex-direction: column;
     position: relative;
     max-width: 500px;
     min-height: 100vh;
@@ -42,7 +44,7 @@ body.is-app-inited {
 .header {
     background: #C2185B;
     color: white;
-    padding: 25px 10px 75px;
+    padding: 25px 10px 20px;
     box-shadow: 0 10px 5px 0 rgba(0, 0, 0, 0.1);
 }
 
@@ -54,35 +56,13 @@ body.is-app-inited {
 
 .display-name {
     margin: 0;
+    margin-bottom: 15px;
     font-size: 3.2em;
     line-height: 1;
 }
 
-.amount-block {
-    margin-top: -50px;
-    display: flex;
-    justify-content: center;
-}
-
 .amount-display {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 150px;
-    height: 150px;
-    border-radius: 50%;
-    background: #FFC107;
-    box-shadow: 0 0 0 1px rgba(255, 193, 7, 0.2);
-    animation: amount-animation 1.5s linear infinite;
-}
-
-@keyframes amount-animation {
-    50% {
-        box-shadow: 0 0 0 20px rgba(255, 193, 7, 0.2);
-    }
-    100% {
-        box-shadow: 0 0 0 20px rgba(255, 193, 7, 0.05);
-    }
+    margin-top: 15px;
 }
 
 .amount-display__current {
@@ -111,5 +91,138 @@ body.is-app-inited {
 @keyframes text-clip {
     to {
         background-position: -400% center;
+    }
+}
+
+.lootbox-wrapper {
+    flex-grow: 1;
+    width: 100%;
+    bottom: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.lootbox {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    -webkit-tap-highlight-color: transparent;
+    transition: transform 0.3s;
+    cursor: pointer;
+}
+.lootbox .box {
+    width: 200px;
+    height: 200px;
+    display: flex;
+    position: relative;
+    flex-direction: column;
+    cursor: pointer;
+    transition: transform 0.7s;
+}
+
+.lootbox--shake .box {
+    -webkit-animation: shake 1s cubic-bezier(0.3, 0.06, 0.2, 0.9) infinite;
+    animation: shake 1s cubic-bezier(0.3, 0.06, 0.2, 0.9) infinite;
+}
+
+.lootbox--finished {
+    transform: translateY(10px);
+}
+
+.lootbox--finished .upper {
+    transform-origin: left bottom;
+    transform: translateY(-20px) rotate(-5deg);
+}
+
+.lootbox--finished .lower {
+    /*transform: translateY(15px);*/
+}
+
+.lootbox .lower {
+    position: relative;
+    text-align: center;
+    text-transform: uppercase;
+}
+
+.lootbox .finish-text {
+    position: relative;
+    top: 25px;
+    font-size: 1.2em;
+    color: white;
+    opacity: 0;
+    z-index: 1;
+    transition: opacity 1s;
+}
+
+.lootbox--finished .finish-text {
+    opacity: 1;
+}
+
+.lootbox .box .upper {
+    border: 1px solid black;
+    border-bottom: 1px solid transparent;
+    width: 100%;
+    flex: 1;
+    background-color: #fdfdfd;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+    border-bottom: 10px solid #585757;
+}
+.lootbox .box .lower {
+    width: 100%;
+    flex: 1;
+    background-color: orange;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+}
+.lootbox .box .latch {
+    position: absolute;
+    width: 10%;
+    height: 15%;
+    background-color: #585757;
+    left: 50%;
+    top: 50%;
+    -webkit-transform: translate(-50%, -10%);
+    transform: translate(-50%, -10%);
+}
+
+@-webkit-keyframes shake {
+    10%, 90% {
+        -webkit-transform: translate3d(-1px, -1px, 0) rotate(5deg);
+        transform: translate3d(-1px, -1px, 0) rotate(5deg);
+    }
+    20%, 80% {
+        -webkit-transform: translate3d(2px, -4px, 0) rotate(-2deg);
+        transform: translate3d(2px, -4px, 0) rotate(-2deg);
+    }
+    30%, 50%, 70% {
+        -webkit-transform: translate3d(-4px, -1px, 0) rotate(3deg);
+        transform: translate3d(-4px, -1px, 0) rotate(3deg);
+    }
+    40%, 60% {
+        -webkit-transform: translate3d(4px, 2px, 0) rotate(-4deg);
+        transform: translate3d(4px, 2px, 0) rotate(-4deg);
+    }
+}
+
+@keyframes shake {
+    10%, 90% {
+        -webkit-transform: translate3d(-1px, -1px, 0) rotate(5deg);
+        transform: translate3d(-1px, -1px, 0) rotate(5deg);
+    }
+    20%, 80% {
+        -webkit-transform: translate3d(2px, -4px, 0) rotate(-2deg);
+        transform: translate3d(2px, -4px, 0) rotate(-2deg);
+    }
+    30%, 50%, 70% {
+        -webkit-transform: translate3d(-4px, -1px, 0) rotate(3deg);
+        transform: translate3d(-4px, -1px, 0) rotate(3deg);
+    }
+    40%, 60% {
+        -webkit-transform: translate3d(4px, 2px, 0) rotate(-4deg);
+        transform: translate3d(4px, 2px, 0) rotate(-4deg);
     }
 }

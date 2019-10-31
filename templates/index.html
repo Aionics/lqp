@@ -110,10 +110,24 @@
         <div class="header">
             <h2 class="display-id" data-bind="text: $root.user.displayId"></h2>
             <h1 class="display-name" data-bind="text: $root.user.displayName"></h1>
-        </div>
-        <div class="amount-block">
+            <hr>
             <div class="amount-display">
                 <span class="amount-display__current" data-bind="text: $root.currentAmount"></span>
+            </div>
+        </div>
+
+        <div class="lootbox-wrapper">
+            <div class="lootbox" role="button" data-bind="
+                click: handleLootboxClick,
+                class: 'lootbox--' + $root.lootboxState
+            ">
+                <div class="box">
+                    <div class="upper"></div>
+                    <div class="lower">
+                        <span class="finish-text">Подойдите к&nbsp;дилеру</span>
+                    </div>
+                    <div class="latch"></div>
+                </div>
             </div>
         </div>
         <!-- /ko -->
