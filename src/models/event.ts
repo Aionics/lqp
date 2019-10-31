@@ -1,5 +1,6 @@
-import {prop, getModelForClass, modelOptions, DocumentType} from '@typegoose/typegoose';
+import {prop, getModelForClass, modelOptions, DocumentType, Ref} from '@typegoose/typegoose';
 import {Schema} from "mongoose";
+import {UserI} from "./user";
 
 const userRef = {
     type: Schema.Types.ObjectId,
@@ -15,7 +16,10 @@ class EventClass {
     public type!: string
 
     @prop({...userRef})
-    public initiator?: Schema.Types.ObjectId
+    public initiator?: Ref<UserI>
+
+    @prop({type: [userRef]})
+    public targetUsers?: [Ref<UserI>]
 
     @prop({default: false})
     public isGlobal?: boolean
