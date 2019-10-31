@@ -10,6 +10,7 @@ import {getBalance} from "./middlewares/current-user/getBalance"
 import {startIncome, stopIncome} from "./middlewares/admin/income-handlers";
 import {getTransactions} from "./middlewares/admin/getTransactions";
 import {purchaseLootbox} from "./middlewares/current-user/purchaseLootbox";
+import {getPendingLootboxes, receiveLootbox} from "./middlewares/admin/processLootboxes";
 
 export function setupRoutes(app: Koa<AppState, AppContext>) {
     const rootRouter = new Router<AppState, AppContext>();
@@ -45,6 +46,8 @@ export function setupRoutes(app: Koa<AppState, AppContext>) {
     apiAdminRouter.post('/start-income', startIncome)
     apiAdminRouter.post('/stop-income', stopIncome)
     apiAdminRouter.get('/transactions', getTransactions)
+    apiAdminRouter.get('/lootboxes', getPendingLootboxes)
+    apiAdminRouter.patch('/lootboxes', receiveLootbox)
     app.use(apiAdminRouter.routes())
     app.use(apiAdminRouter.allowedMethods())
 }

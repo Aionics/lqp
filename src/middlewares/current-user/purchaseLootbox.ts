@@ -21,7 +21,8 @@ export const purchaseLootbox: PrivateMiddleware = async (ctx, next) => {
         targetUsers: [currentUser],
         moneyChange: getLootboxCost(tier),
         extras: {
-            tier: tier
+            tier: tier,
+            received: false
         }
     })
     await purchaseEvent.save()
