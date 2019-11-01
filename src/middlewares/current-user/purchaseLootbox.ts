@@ -1,6 +1,7 @@
 import {PrivateMiddleware} from '../../../typings/koa'
 import {Event} from "../../models/event";
 import {LOOTBOX_COSTS} from "../../constants";
+import {calculateBalance} from "../../helpers/helpers";
 
 function getLootboxCost(tier: any): number {
     if (typeof tier === "number") {
@@ -14,12 +15,19 @@ function getLootboxCost(tier: any): number {
 export const purchaseLootbox: PrivateMiddleware = async (ctx, next) => {
     const {currentUser} = ctx.state
     const {tier} = ctx.request.body || 1
+    const userBalance = await calculateBalance(ctx.state.currentUser._id)
+    const lootboxCost = getLootboxCost(tier)
+
+    if (userBalance < lootboxCost) {
+        ctx.fail(403, 'not enought money')
+        return next()
+    }
 
     const purchaseEvent = new Event({
         type: 'purchase-lootbox',
         initiator: currentUser,
         targetUsers: [currentUser],
-        moneyChange: getLootboxCost(tier),
+        moneyChange: lootboxCost,
         extras: {
             tier: tier,
             received: false
