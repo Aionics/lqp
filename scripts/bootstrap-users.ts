@@ -5,7 +5,7 @@ import usersConfig from './users.json'
 
 const scriptsLogger = getLogger('scripts')
 
-async function bootstrap() {
+export async function bootstrap() {
   scriptsLogger.info('Start bootstrapping users...')
   await Database.connect()
 
