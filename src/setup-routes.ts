@@ -14,6 +14,8 @@ import {requireAdminLogin} from "./middlewares/login/requireAdminLogin"
 import {getPendingLootboxes, receiveLootbox} from "./middlewares/admin/processLootboxes";
 import {LOOTBOX_COSTS} from "./constants"
 import {wipeEvents} from "./middlewares/admin/wipeEvents";
+import {giveBounty} from "./middlewares/admin/giveBounty";
+import {getUsers} from "./middlewares/admin/getUsers";
 
 export function setupRoutes(app: Koa<AppState, AppContext>) {
     const rootRouter = new Router<AppState, AppContext>();
@@ -65,7 +67,10 @@ export function setupRoutes(app: Koa<AppState, AppContext>) {
     apiAdminRouter.get('/transactions', getTransactions)
     apiAdminRouter.get('/lootboxes', getPendingLootboxes)
     apiAdminRouter.patch('/lootboxes', receiveLootbox)
+    apiAdminRouter.post('/bounty', giveBounty)
+    apiAdminRouter.get('/users', getUsers)
     apiAdminRouter.post('/wipe-them-all', wipeEvents)
+
     app.use(apiAdminRouter.routes())
     app.use(apiAdminRouter.allowedMethods())
 }
