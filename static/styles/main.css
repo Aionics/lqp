@@ -161,13 +161,16 @@ body * {
 
 .lootbox .cost {
     font-size: 3em;
+    opacity: 1;
+}
+
+.lootbox--finished .cost {
     opacity: 0;
     display: none;
 }
 
 .lootbox--initial .cost {
     display: inline-block;
-    opacity: 1;
 }
 
 .lootbox .finish-text {
