@@ -1,13 +1,18 @@
 import {AppMiddleware, PrivateMiddleware} from "../../../typings/koa";
 import {calculateBalance} from "../../helpers/helpers";
 import {Event} from "../../models/event";
+import {User} from "../../models/user";
 
 export const giveBounty: AppMiddleware = async (ctx, next) => {
-    const {user_id, amount} = ctx.request.body
+    const {displayName, amount} = ctx.request.body
+
+    const targetUser = await User.findOne({
+        displayName: {$regex: new RegExp("^" + displayName.toLowerCase(), "i")}
+    })
 
     const bountyEvent = new Event({
         type: 'bounty',
-        targetUsers: [user_id],
+        targetUsers: [targetUser],
         moneyChange: amount
     })
     await bountyEvent.save()
