@@ -77,10 +77,6 @@ Event.findOne(welcomeBonusObject, (err, welcomeBonusEvent) => {
     }
 })
 
-// WIPE EVENTS
-// Event.deleteMany({}, (err) => {
-//     console.log(err)
-// })
 app.listen(PORT, () => {
     serverLogger.info(`Server started at port ${PORT}`)
     Database.connect()
