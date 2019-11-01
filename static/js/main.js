@@ -9,7 +9,15 @@ var appViewModel = {
     },
     changeNamePopup: {
         isShown: ko.observable(false)
-    }
+    },
+
+    lootboxes: [
+        {level: 1, cost: 15, mod: 'level-one'},
+        {level: 2, cost: 30, mod: 'level-two'},
+        {level: 3, cost: 50, mod: 'level-three'}
+    ],
+
+    currentProcessLootbox: ko.observable(null)
 };
 ko.track(appViewModel, {deep: true})
 
@@ -48,7 +56,7 @@ function getBalanceRepeatedly() {
     }, 5 * 1000)
 }
 
-function purchaseLootbox() {
+function purchaseLootbox(level) {
     return axios.post('/api/private/purchase-lootbox')
         .then(function(response) {
             getBalance()
@@ -107,36 +115,57 @@ function handleNamePopupSubmit(props) {
         })
 }
 
-function handleLootboxClick() {
-    if (appViewModel.lootboxState !== 'initial') {
-        return
+function getLootboxClickHandler(lootbox) {
+    return function() {
+        if (appViewModel.currentProcessLootbox) {
+            return
+        }
+        appViewModel.currentProcessLootbox = {
+            level: lootbox.level,
+            state: 'shake'
+        }
+        setTimeout(function() {
+            purchaseLootbox(lootbox.level).then(function() {
+                appViewModel.currentProcessLootbox = {
+                    level: lootbox.level,
+                    state: 'finished'
+                }
+                setTimeout(function() {
+                    appViewModel.currentProcessLootbox = null
+                }, 3000)
+            }).catch(function(err) {
+                appViewModel.currentProcessLootbox = null
+            })
+        }, 1500)
     }
-    appViewModel.lootboxState = 'shake'
-    setTimeout(function() {
-        purchaseLootbox().then(function() {
-            appViewModel.lootboxState = 'finished'
+}
 
-            setTimeout(function() {
-                appViewModel.lootboxState = 'initial'
-            }, 5000)
-        }).catch(function(err) {
-            appViewModel.lootboxState = 'initial'
-        })
-    }, 1500)
+function isLootboxInShakeState(level) {
+    return appViewModel.currentProcessLootbox
+        && appViewModel.currentProcessLootbox.level === level
+        && appViewModel.currentProcessLootbox.state === 'shake'
+}
+
+function isLootboxInFinishedState(level) {
+    return appViewModel.currentProcessLootbox
+        && appViewModel.currentProcessLootbox.level === level
+        && appViewModel.currentProcessLootbox.state === 'finished'
 }
 
 ko.applyBindings(appViewModel);
 requestLogin()
 appViewModel.isAppInited = true
 
-$(function() {
-    var mySwiper = new Swiper('.swiper-container', {
-        direction: 'horizontal',
-        loop: true,
-        navigation: {
-            nextEl: '.swiper-button-next',
-            prevEl: '.swiper-button-prev',
-        }
-    })
+var mySwiper = new Swiper('.swiper-container', {
+    direction: 'horizontal',
+    navigation: {
+        nextEl: '.swiper-button-next',
+        prevEl: '.swiper-button-prev',
+    }
 })
 
+// ko.getObservable(appViewModel, 'currentProcessLootbox').subscribe(function(val) {
+//     console.log(val)
+//     mySwiper.params.noSwiping = Boolean(val);
+//     mySwiper.reInit()
+// })

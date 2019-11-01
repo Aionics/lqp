@@ -103,7 +103,6 @@ body * {
 }
 
 .lootbox {
-    width: 100%;
     height: 100%;
     display: flex;
     justify-content: center;
@@ -146,17 +145,34 @@ body * {
     text-transform: uppercase;
 }
 
+.lootbox .const,
 .lootbox .finish-text {
     position: relative;
     top: 25px;
     font-size: 1.2em;
     color: white;
-    opacity: 0;
-    z-index: 1;
     transition: opacity 1s;
 }
 
+.lootbox .const {
+    font-size: 3em;
+    opacity: 0;
+    display: none;
+}
+
+.lootbox--initial .const {
+    display: inline-block;
+    opacity: 1;
+}
+
+.lootbox .finish-text {
+    display: none;
+    opacity: 0;
+    z-index: 1;
+}
+
 .lootbox--finished .finish-text {
+    display: inline-block;
     opacity: 1;
 }
 
@@ -237,4 +253,19 @@ body * {
 .swiper-container {
     width: 100%;
     margin-top: 50px;
+    overflow: visible;
+}
+
+.lootbox-in-progress {
+    pointer-events: none;
+}
+
+.swiper-button-prev,
+.swiper-button-next {
+    transition: opacity 1s;
+}
+
+.lootbox-in-progress .swiper-button-prev,
+.lootbox-in-progress .swiper-button-next {
+    opacity: 0;
 }
