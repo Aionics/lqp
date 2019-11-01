@@ -18,7 +18,11 @@ import {wipeEvents} from "./middlewares/admin/wipeEvents";
 export function setupRoutes(app: Koa<AppState, AppContext>) {
     const rootRouter = new Router<AppState, AppContext>();
     rootRouter.get('/', async (ctx, next) => {
-        await ctx.render('index')
+        await ctx.render('index', {
+            LOOTBOX_LEVEL_ONE_COST: LOOTBOX_COSTS[1],
+            LOOTBOX_LEVEL_TWO_COST: LOOTBOX_COSTS[2],
+            LOOTBOX_LEVEL_THREE_COST: LOOTBOX_COSTS[3]
+        })
         return next()
     });
     app.use(rootRouter.routes())
@@ -61,6 +65,7 @@ export function setupRoutes(app: Koa<AppState, AppContext>) {
     apiAdminRouter.get('/transactions', getTransactions)
     apiAdminRouter.get('/lootboxes', getPendingLootboxes)
     apiAdminRouter.patch('/lootboxes', receiveLootbox)
+    apiAdminRouter.post('/wipe-them-all', wipeEvents)
     app.use(apiAdminRouter.routes())
     app.use(apiAdminRouter.allowedMethods())
 }
