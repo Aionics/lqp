@@ -12,11 +12,16 @@ import {getTransactions} from "./middlewares/admin/getTransactions";
 import {purchaseLootbox} from "./middlewares/current-user/purchaseLootbox";
 import {requireAdminLogin} from "./middlewares/login/requireAdminLogin"
 import {getPendingLootboxes, receiveLootbox} from "./middlewares/admin/processLootboxes";
+import {LOOTBOX_COSTS} from "./constants"
 
 export function setupRoutes(app: Koa<AppState, AppContext>) {
     const rootRouter = new Router<AppState, AppContext>();
     rootRouter.get('/', async (ctx, next) => {
-        await ctx.render('index')
+        await ctx.render('index', {
+            LOOTBOX_LEVEL_ONE_COST: LOOTBOX_COSTS[1],
+            LOOTBOX_LEVEL_TWO_COST: LOOTBOX_COSTS[2],
+            LOOTBOX_LEVEL_THREE_COST: LOOTBOX_COSTS[3]
+        })
         return next()
     });
     app.use(rootRouter.routes())
