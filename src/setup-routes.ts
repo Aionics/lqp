@@ -12,6 +12,7 @@ import {getTransactions} from "./middlewares/admin/getTransactions";
 import {purchaseLootbox} from "./middlewares/current-user/purchaseLootbox";
 import {requireAdminLogin} from "./middlewares/login/requireAdminLogin"
 import {getPendingLootboxes, receiveLootbox} from "./middlewares/admin/processLootboxes";
+import {LOOTBOX_COSTS} from "./constants"
 import {wipeEvents} from "./middlewares/admin/wipeEvents";
 
 export function setupRoutes(app: Koa<AppState, AppContext>) {
@@ -59,7 +60,6 @@ export function setupRoutes(app: Koa<AppState, AppContext>) {
     apiAdminRouter.post('/stop-income', stopIncome)
     apiAdminRouter.get('/transactions', getTransactions)
     apiAdminRouter.get('/lootboxes', getPendingLootboxes)
-    apiAdminRouter.post('/wipe-them-all', wipeEvents)
     apiAdminRouter.patch('/lootboxes', receiveLootbox)
     app.use(apiAdminRouter.routes())
     app.use(apiAdminRouter.allowedMethods())

@@ -99,16 +99,27 @@
         </div>
     </div>
 
-    <table class="transactions">
+    <table class="transactions table">
+        <colgroup>
+            <col span="1" style="width: 30px">
+            <!--<col span="1" style="width: 200px">-->
+            <!--<col span="1" style="width: 15%;">-->
+        </colgroup>
         <thead>
         <tr>
-            <th>Тип</th>
-            <th>Last name</th>
+            <th>Тир</th>
+            <th class="td-left">Пользователь</th>
         </tr>
         </thead>
         <tbody data-bind="foreach: transactions">
             <tr>
-                <td data-bind="text: type"></td>
+                <td data-bind="text: extras.tier"></td>
+                <td class="td-left">
+                    <span data-bind="text: targetUsers[0].displayId"></span>
+                    (<span data-bind="text: targetUsers[0].displayName"></span>)
+
+                    <button class="mark-button" data-bind="click: markPurchaseReceived.bind(null, $data._id)">→ Отдать</button>
+                </td>
             </tr>
         </tbody>
     </table>

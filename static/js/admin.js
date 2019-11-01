@@ -25,9 +25,19 @@ function handleStopIncomeButtonClick() {
 }
 
 function getTransactions() {
-    axios.get('/api/admin/transactions')
+    axios.get('/api/admin/lootboxes')
         .then(function(response) {
             adminAppViewModel.transactions = response.data.result
+        })
+        .catch(function(err) {
+            alert(JSON.stringify(err))
+        })
+}
+
+function markPurchaseReceived(eventId) {
+    axios.patch('/api/admin/lootboxes', {id: eventId})
+        .then(function(response) {
+            getTransactions()
         })
         .catch(function(err) {
             alert(JSON.stringify(err))

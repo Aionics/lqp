@@ -63,7 +63,7 @@ async function tryIncome() {
     await incomeEvent.save()
 }
 
-setInterval(() => tryIncome().catch(serverLogger.error), 5 * 1000)
+setInterval(() => tryIncome().catch(serverLogger.error), INCOME_INTERVAL)
 
 // TODO: google for 'create if not exists'
 const welcomeBonusObject = {

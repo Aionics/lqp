@@ -24,6 +24,14 @@
 
     <link rel="stylesheet" href="styles/main.css">
     <link rel="stylesheet" href="styles/components.css">
+
+    <script>
+        window.CONSTANTS = {
+            LOOTBOX_LEVEL_ONE_COST: {{ LOOTBOX_LEVEL_ONE_COST }},
+            LOOTBOX_LEVEL_TWO_COST: {{ LOOTBOX_LEVEL_TWO_COST }},
+            LOOTBOX_LEVEL_THREE_COST: {{ LOOTBOX_LEVEL_THREE_COST }}
+        }
+    </script>
 </head>
 <body class="app-body" data-bind="css: {'is-app-inited': $root.isAppInited}">
     <template id="lqp-popup">
@@ -131,6 +139,8 @@
                             click: getLootboxClickHandler($data),
                             class: 'lootbox--' + $data.mod,
                             css: {
+                                'lootbox--initial': !$root.currentProcessLootbox,
+                                'lootbox--disabled': !$root.currentProcessLootbox && !isLootboxAvailableForPurchase($data.cost),
                                 'lootbox--shake': isLootboxInShakeState($data.level),
                                 'lootbox--finished': isLootboxInFinishedState($data.level)
                             }
@@ -138,7 +148,7 @@
                             <div class="box">
                                 <div class="upper"></div>
                                 <div class="lower">
-                                    <span class="const" data-bind="text: $data.const"></span>
+                                    <span class="cost" data-bind="text: $data.cost"></span>
                                     <span class="finish-text">Подойдите к&nbsp;дилеру</span>
                                 </div>
                                 <div class="latch"></div>

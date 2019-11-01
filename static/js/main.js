@@ -2,7 +2,6 @@ var appViewModel = {
     isAppInited: ko.observable(false),
     user: ko.observable(null),
     currentBalance: ko.observable(0),
-    lootboxState: ko.observable('initial'), // initial, shake, finished
     loginPopup: {
         isShown: ko.observable(false),
         errorMessage: ko.observable(null)
@@ -12,9 +11,9 @@ var appViewModel = {
     },
 
     lootboxes: [
-        {level: 1, cost: 15, mod: 'level-one'},
-        {level: 2, cost: 30, mod: 'level-two'},
-        {level: 3, cost: 50, mod: 'level-three'}
+        {level: 1, cost: Math.abs(window.CONSTANTS.LOOTBOX_LEVEL_ONE_COST), mod: 'level-one'},
+        {level: 2, cost: Math.abs(window.CONSTANTS.LOOTBOX_LEVEL_TWO_COST), mod: 'level-two'},
+        {level: 3, cost: Math.abs(window.CONSTANTS.LOOTBOX_LEVEL_THREE_COST), mod: 'level-three'}
     ],
 
     currentProcessLootbox: ko.observable(null)
@@ -57,7 +56,7 @@ function getBalanceRepeatedly() {
 }
 
 function purchaseLootbox(level) {
-    return axios.post('/api/private/purchase-lootbox')
+    return axios.post('/api/private/purchase-lootbox', {tier: level})
         .then(function(response) {
             getBalance()
         })
@@ -152,6 +151,11 @@ function isLootboxInFinishedState(level) {
         && appViewModel.currentProcessLootbox.state === 'finished'
 }
 
+function isLootboxAvailableForPurchase(cost) {
+    console.log(appViewModel.currentBalance >= cost, appViewModel.currentBalance, cost)
+    return appViewModel.currentBalance >= cost
+}
+
 ko.applyBindings(appViewModel);
 requestLogin()
 appViewModel.isAppInited = true
@@ -163,9 +167,3 @@ var mySwiper = new Swiper('.swiper-container', {
         prevEl: '.swiper-button-prev',
     }
 })
-
-// ko.getObservable(appViewModel, 'currentProcessLootbox').subscribe(function(val) {
-//     console.log(val)
-//     mySwiper.params.noSwiping = Boolean(val);
-//     mySwiper.reInit()
-// })

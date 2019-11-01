@@ -13,4 +13,3 @@ export const LOOTBOX_COSTS = {
     2: -20,
     3: -50
 }
-

@@ -121,6 +121,11 @@ body * {
     transition: transform 0.7s;
 }
 
+.lootbox--disabled {
+    pointer-events: none;
+    opacity: 0.5;
+}
+
 .lootbox--shake .box {
     -webkit-animation: shake 1s cubic-bezier(0.3, 0.06, 0.2, 0.9) infinite;
     animation: shake 1s cubic-bezier(0.3, 0.06, 0.2, 0.9) infinite;
@@ -145,7 +150,7 @@ body * {
     text-transform: uppercase;
 }
 
-.lootbox .const,
+.lootbox .cost,
 .lootbox .finish-text {
     position: relative;
     top: 25px;
@@ -154,15 +159,18 @@ body * {
     transition: opacity 1s;
 }
 
-.lootbox .const {
+.lootbox .cost {
     font-size: 3em;
+    opacity: 1;
+}
+
+.lootbox--finished .cost {
     opacity: 0;
     display: none;
 }
 
-.lootbox--initial .const {
+.lootbox--initial .cost {
     display: inline-block;
-    opacity: 1;
 }
 
 .lootbox .finish-text {

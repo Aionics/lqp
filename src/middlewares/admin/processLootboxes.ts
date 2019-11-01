@@ -6,7 +6,9 @@ export const getPendingLootboxes: AppMiddleware = async (ctx, next) => {
     const pendingLootboxes = await Event.find({
         type: 'purchase-lootbox',
         'extras.received': false
-    }).populate([{path: 'targetUsers', model: User}, 'initiator'])
+    })
+        .sort({_id: -1})
+        .populate([{path: 'targetUsers', model: User}, 'initiator'])
     ctx.success(pendingLootboxes)
     return next()
 }
